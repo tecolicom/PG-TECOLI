@@ -11,6 +11,13 @@
     pitch: 57
     bearing: -35
   select_bbox: [139.335, 35.898, 139.395, 35.945]  # この範囲の路線を全選択（西・南・東・北）
+  places:                             # 地図データ未収載でも本文からリンクしたい地点（クリックで移動）
+    - name: 小千谷発電所
+      coords: [138.80683, 37.29437]
+      type: plant
+    - name: 小千谷第二発電所
+      coords: [138.80900, 37.29388]
+      type: plant
   more: https://pg.tecoli.com/spots.html
   body: |
     日高市の住宅地の縁にある**中東京変電所**。一見ふつうの変電所ですが、
