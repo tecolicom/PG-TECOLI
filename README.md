@@ -6,21 +6,21 @@
 ## 構成
 
 ```
-spots/            見どころの元データ（1ファイル = 1見どころ。ここを編集する）
-  <id>.yaml       ファイル名は id と同じにする
-spots.yaml        配信用の生成物（直接編集しない。CI が自動更新）
-scripts/build.py  spots/*.yaml → spots.yaml の生成スクリプト
+spots/                見どころの元データ（1ファイル = 1見どころ。ここを編集する）
+  NNN-<id>.yaml       NNN = 3桁の連番（表示番号・並び順。重複はビルドエラー）
+spots.json            配信用の生成物（minified JSON。直接編集しない。CI が自動更新）
+scripts/build.py      spots/*.yaml → spots.json の生成スクリプト
 ```
 
-サイトはリポジトリ直下の `spots.yaml` を読み込みます。`spots/` を編集して main に push すると
-GitHub Actions が `spots.yaml` を再生成してコミットします。
+サイトはリポジトリ直下の `spots.json` を読み込みます。`spots/` を編集して main に push すると
+GitHub Actions が `spots.json` を再生成してコミットします。
 手元で生成する場合は `python3 scripts/build.py`（要 PyYAML）。
+`no`（表示番号）と `id` はファイル名から決まるので、ファイル内に書く必要はありません。
 
-## 見どころ（spots/<id>.yaml）の書式
+## 見どころ（spots/NNN-<id>.yaml）の書式
 
 ```yaml
-id: nakatokyo-hidaka            # 一意なID（英数字とハイフン。ファイル名と一致させる）
-no: 1                           # 表示番号
+# ファイル名: 001-nakatokyo-hidaka.yaml（連番と id はファイル名から決まる）
 title: 中東京変電所（埼玉県日高市）
 subtitle: 3つの“電力の世界”が交わる場所
 marker: [139.35386, 35.91528]   # 吹き出しの位置 [経度, 緯度]
@@ -47,15 +47,16 @@ body: |                         # 解説文（簡易 Markdown）
 
 ## 投稿のしかた
 
-1. このリポジトリを **fork & clone** して `spots/<あなたのID>.yaml` を追加
-   （`python3 scripts/build.py` で `spots.yaml` を再生成。fork で Actions を有効にすれば push 時に自動生成）
+1. このリポジトリを **fork & clone** して `spots/NNN-<あなたのID>.yaml` を追加
+   （NNN は既存の続き番号。`python3 scripts/build.py` で `spots.json` を再生成。
+   fork で Actions を有効にすれば push 時に自動生成）
 2. fork を GitHub に push し、**本番サイトで動作確認**:
    `https://pg.tecoli.com/?data=あなたのユーザー名/PG-TECOLI`
    （ブランチ指定は `?data=ユーザー名/リポジトリ名@ブランチ名`）
 3. 表示・カメラ・強調範囲を確認できたら **Pull Request** を送ってください
 
 ローカルで鉄塔てこりを動かしている場合は `?data=http://localhost:8000` のように
-URL を直接指定することもできます（`spots.yaml` を配信できる任意のベースURL）。
+URL を直接指定することもできます（`spots.json` を配信できる任意のベースURL）。
 
 ## ライセンス
 
