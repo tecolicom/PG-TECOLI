@@ -3,31 +3,40 @@
 [鉄塔てこり](https://pg.tecoli.com)（関東の送電鉄塔・送電線マップ）で使う公開データです。
 現在は「見どころ」（`spots.yaml`）のみですが、将来ほかの種類のデータも追加する想定です。
 
-## データの種類
+## 構成
 
-- `spots.yaml` — **見どころ**: 地図上の吹き出しから解説を表示するスポット集
+```
+spots/            見どころの元データ（1ファイル = 1見どころ。ここを編集する）
+  <id>.yaml       ファイル名は id と同じにする
+spots.yaml        配信用の生成物（直接編集しない。CI が自動更新）
+scripts/build.py  spots/*.yaml → spots.yaml の生成スクリプト
+```
 
-## spots.yaml の書式
+サイトはリポジトリ直下の `spots.yaml` を読み込みます。`spots/` を編集して main に push すると
+GitHub Actions が `spots.yaml` を再生成してコミットします。
+手元で生成する場合は `python3 scripts/build.py`（要 PyYAML）。
+
+## 見どころ（spots/<id>.yaml）の書式
 
 ```yaml
-- id: nakatokyo-hidaka          # 一意なID（英数字とハイフン）
-  no: 1                         # 表示番号
-  title: 中東京変電所（埼玉県日高市）
-  subtitle: 3つの“電力の世界”が交わる場所
-  marker: [139.35386, 35.91528] # 吹き出しの位置 [経度, 緯度]
-  camera:                       # クリック時に飛ぶカメラ
-    center: [139.363, 35.9225]  # 中心 [経度, 緯度]
-    zoom: 12.7                  # ズーム
-    pitch: 57                   # 傾き（度。0=真上から）
-    bearing: -35                # 方位（度。0=北が上）
-  select_bbox: [西, 南, 東, 北]  # この範囲に掛かる路線をすべて選択（電圧色で強調）
-  places:                       # 任意: 地図データ未収載の地点を本文からリンクしたい場合
-    - name: 小千谷発電所         # 本文中のこの文字列がリンクになる
-      coords: [138.80683, 37.29437]  # クリックで移動する先 [経度, 緯度]
-      type: plant               # plant=発電所（茶）。省略時は voltage の電圧色
-  more: https://pg.tecoli.com/spots.html   # 「くわしく読む」リンク（任意）
-  body: |                       # 解説文（簡易 Markdown）
-    段落は空行で区切ります。**太字** と [リンク](https://...) が使えます。
+id: nakatokyo-hidaka            # 一意なID（英数字とハイフン。ファイル名と一致させる）
+no: 1                           # 表示番号
+title: 中東京変電所（埼玉県日高市）
+subtitle: 3つの“電力の世界”が交わる場所
+marker: [139.35386, 35.91528]   # 吹き出しの位置 [経度, 緯度]
+camera:                         # クリック時に飛ぶカメラ
+  center: [139.3585, 35.9205]   # 中心 [経度, 緯度]
+  zoom: 13.8                    # ズーム
+  pitch: 0                      # 傾き（度。0=真上から。斜め俯瞰にするなら 50〜60 など）
+  bearing: 0                    # 方位（度。0=北が上）
+select_bbox: [西, 南, 東, 北]    # この範囲に掛かる路線をすべて選択（電圧色で強調）
+places:                         # 任意: 地図データ未収載の地点を本文からリンクしたい場合
+  - name: 小千谷発電所           # 本文中のこの文字列がリンクになる
+    coords: [138.80683, 37.29437]  # クリックで移動する先 [経度, 緯度]
+    type: plant                 # plant=発電所（茶）。省略時は voltage の電圧色
+more: https://pg.tecoli.com/spots.html   # 「くわしく読む」リンク（任意）
+body: |                         # 解説文（簡易 Markdown）
+  段落は空行で区切ります。**太字** と [リンク](https://...) が使えます。
 ```
 
 - `body` で使えるのは **太字**・[リンク](url)・段落のみ（HTML は書けません）
@@ -38,7 +47,8 @@
 
 ## 投稿のしかた
 
-1. このリポジトリを **fork & clone** して `spots.yaml` に項目を追加
+1. このリポジトリを **fork & clone** して `spots/<あなたのID>.yaml` を追加
+   （`python3 scripts/build.py` で `spots.yaml` を再生成。fork で Actions を有効にすれば push 時に自動生成）
 2. fork を GitHub に push し、**本番サイトで動作確認**:
    `https://pg.tecoli.com/?data=あなたのユーザー名/PG-TECOLI`
    （ブランチ指定は `?data=ユーザー名/リポジトリ名@ブランチ名`）
