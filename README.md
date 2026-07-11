@@ -1,4 +1,4 @@
-# pg-tecoli-data
+# PG-TECOLI
 
 [鉄塔てこり](https://pg.tecoli.com)（関東の送電鉄塔・送電線マップ）で使う公開データです。
 現在は「見どころ」（`spots.yaml`）のみですが、将来ほかの種類のデータも追加する想定です。
@@ -34,7 +34,7 @@
 
 1. このリポジトリを **fork & clone** して `spots.yaml` に項目を追加
 2. fork を GitHub に push し、**本番サイトで動作確認**:
-   `https://pg.tecoli.com/?data=あなたのユーザー名/pg-tecoli-data`
+   `https://pg.tecoli.com/?data=あなたのユーザー名/PG-TECOLI`
    （ブランチ指定は `?data=ユーザー名/リポジトリ名@ブランチ名`）
 3. 表示・カメラ・強調範囲を確認できたら **Pull Request** を送ってください
 
