@@ -49,9 +49,11 @@ def build_flows() -> None:
     if not isinstance(items, list):
         sys.exit("flows.yaml は配列である必要があります")
     for d in items:
-        for key in ("occto", "label", "from", "to"):
+        for key in ("occto", "label"):
             if not d.get(key):
                 sys.exit(f"flows.yaml: {key} は必須です（{d}）")
+        if not d.get("path") and not (d.get("from") and d.get("to")):
+            sys.exit(f"flows.yaml: path か from/to のどちらかが必要です（{d['occto']}）")
     out = json.dumps(items, ensure_ascii=False, separators=(",", ":"))
     (ROOT / "flows.json").write_text(out, encoding="utf-8")
     print(f"flows.json: {len(items)} 件 / {len(out.encode('utf-8'))} bytes")
