@@ -40,6 +40,23 @@ def load_one(path: pathlib.Path) -> dict:
     return d
 
 
+def build_flows() -> None:
+    """flows.yaml（連系線コリドー定義）→ flows.json。無ければスキップ。"""
+    src = ROOT / "flows.yaml"
+    if not src.exists():
+        return
+    items = yaml.safe_load(src.read_text(encoding="utf-8"))
+    if not isinstance(items, list):
+        sys.exit("flows.yaml は配列である必要があります")
+    for d in items:
+        for key in ("occto", "label", "from", "to"):
+            if not d.get(key):
+                sys.exit(f"flows.yaml: {key} は必須です（{d}）")
+    out = json.dumps(items, ensure_ascii=False, separators=(",", ":"))
+    (ROOT / "flows.json").write_text(out, encoding="utf-8")
+    print(f"flows.json: {len(items)} 件 / {len(out.encode('utf-8'))} bytes")
+
+
 def main() -> None:
     files = sorted((ROOT / "spots").glob("*.yaml"))
     items = [load_one(f) for f in files]
@@ -51,6 +68,7 @@ def main() -> None:
     out = json.dumps(items, ensure_ascii=False, separators=(",", ":"))
     (ROOT / "spots.json").write_text(out, encoding="utf-8")
     print(f"spots.json: {len(items)} 件 / {len(out.encode('utf-8'))} bytes")
+    build_flows()
 
 
 if __name__ == "__main__":
