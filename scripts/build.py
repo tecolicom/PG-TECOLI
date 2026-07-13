@@ -77,15 +77,21 @@ def build_tours() -> None:
             d["no"] = d.pop(False)
         if d.get("id") not in (None, tid):
             sys.exit(f"{path.name}: id（{d['id']}）はファイル名の <id> 部と一致させてください")
+        if d.get("no") not in (None, no):
+            sys.exit(f"{path.name}: no はファイル名の連番から決まります（no: 行は不要）")
         d["id"], d["no"] = tid, no
         for key in ("title", "summary", "routes", "stops"):
             if not d.get(key):
                 sys.exit(f"{path.name}: {key} は必須です")
         for i, s in enumerate(d["stops"]):
+            if not isinstance(s, dict):
+                sys.exit(f"{path.name}: stops[{i}] はマッピングで書いてください")
             for key in ("heading", "camera", "body"):
                 if not s.get(key):
                     sys.exit(f"{path.name}: stops[{i}].{key} は必須です")
             cam = s["camera"]
+            if not isinstance(cam, dict):
+                sys.exit(f"{path.name}: stops[{i}].camera はマッピングで書いてください")
             if not (isinstance(cam.get("center"), list) and len(cam["center"]) == 2
                     and "zoom" in cam):
                 sys.exit(f"{path.name}: stops[{i}].camera は center=[lng,lat] と zoom が必須です")

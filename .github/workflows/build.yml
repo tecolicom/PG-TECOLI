@@ -2,7 +2,7 @@ name: build spots.json
 on:
   push:
     branches: [main]
-    paths: ["spots/**", "scripts/build.py"]
+    paths: ["spots/**", "tours/**", "flows.yaml", "scripts/build.py"]
   workflow_dispatch:
 
 jobs:
