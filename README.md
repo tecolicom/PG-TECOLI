@@ -1,7 +1,7 @@
 # PG-TECOLI
 
 [鉄塔てこり](https://pg.tecoli.com)（関東の送電鉄塔・送電線マップ）で使う公開データです。
-現在は「見どころ」（`spots.yaml`）のみですが、将来ほかの種類のデータも追加する想定です。
+「見どころ」（`spots/`）と「路線ツアー」（`tours/`）があり、将来ほかの種類のデータも追加する想定です。
 
 ## 構成
 
@@ -9,13 +9,17 @@
 spots/                見どころの元データ（1ファイル = 1見どころ。ここを編集する）
   NNN-<id>.yaml       NNN = 3桁の連番（表示番号・並び順。重複はビルドエラー）
 spots.json            配信用の生成物（minified JSON。直接編集しない。CI が自動更新）
-scripts/build.py      spots/*.yaml → spots.json の生成スクリプト
+tours/                路線ツアーの元データ（1ファイル = 1ツアー。ここを編集する）
+  NNN-<id>.yaml       NNN = 3桁の連番（表示番号・並び順。重複はビルドエラー）
+tours.json            配信用の生成物（minified JSON。直接編集しない。CI が自動更新）
+scripts/build.py      spots/*.yaml → spots.json、tours/*.yaml → tours.json の生成スクリプト
 ```
 
-サイトはリポジトリ直下の `spots.json` を読み込みます。`spots/` を編集して main に push すると
-GitHub Actions が `spots.json` を再生成してコミットします。
+サイトはリポジトリ直下の `spots.json` / `tours.json` を読み込みます。
+`spots/` や `tours/` を編集して main に push すると GitHub Actions が生成物を再生成してコミットします。
 手元で生成する場合は `python3 scripts/build.py`（要 PyYAML）。
 `no`（表示番号）と `id` はファイル名から決まるので、ファイル内に書く必要はありません。
+`tours/` ディレクトリが存在しない場合、`tours.json` の生成はスキップされます。
 
 ## 見どころ（spots/NNN-<id>.yaml）の書式
 
@@ -44,6 +48,35 @@ body: |                         # 解説文（簡易 Markdown）
   クリックでその場所へ移動します（地図データにある名前が対象。無い地点は `places` で補えます）
 - カメラ値は地図をお好みの構図にしたあと、ブラウザのコンソールで
   `_map.getCenter(), _map.getZoom(), _map.getPitch(), _map.getBearing()` を見ると得られます
+
+## 路線ツアー（tours/NNN-<id>.yaml）の書式
+
+```yaml
+# ファイル名: 001-shin-tokorozawa.yaml（連番と id はファイル名から決まる）
+title: 新所沢線ツアー
+subtitle: 西武線と交差する63kV線
+summary: 起点から終点までの見どころをたどります
+og_image: /images/tours/shin-tokorozawa.png   # 任意: SNS共有カード用の画像（サイト相対パス）
+routes: [新所沢線]              # 路線は「名前」で書く（地図データにある名前が対象）
+references:                     # 任意: 参考資料
+  - title: 参考資料のタイトル
+    url: https://...
+stops:                          # ツアーの各地点（順番に表示）
+  - heading: 起点
+    routes: [新所沢線]           # 任意: このstopで強調したい路線（省略時はツアー全体の routes）
+    camera:                     # クリック時に飛ぶカメラ
+      center: [139.22, 35.71]   # 中心 [経度, 緯度]
+      zoom: 13                  # ズーム
+      pitch: 0                  # 任意: 傾き（度。0=真上から）
+      bearing: 0                # 任意: 方位（度。0=北が上）
+    body: |                     # 解説文（簡易 Markdown）
+      段落は空行で区切ります。**太字** と [リンク](https://...) が使えます。
+```
+
+- 必須キー: `title`・`summary`・`routes`・`stops`。`stops` の各要素は
+  `heading`・`camera`（`center=[経度, 緯度]` と `zoom` が必須）・`body` が必須
+- 任意キー: `subtitle`・`og_image`・`references`、`stops[].routes`
+- `body` で使えるのは **太字**・[リンク](url)・段落のみ（HTML は書けません）
 
 ## 投稿のしかた
 
