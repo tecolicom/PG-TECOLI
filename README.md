@@ -56,7 +56,7 @@ body: |                         # 解説文（簡易 Markdown）
 title: 新所沢線ツアー
 subtitle: 西武線と交差する63kV線
 summary: 起点から終点までの見どころをたどります
-og_image: /images/tours/shin-tokorozawa.png   # 任意: SNS共有カード用の画像（サイト相対パス）
+og_image: img/tours/shin-tokorozawa.jpg   # 任意: SNS共有カード用の画像（サイト相対パス）
 routes: [新所沢線]              # 路線は「名前」で書く（地図データにある名前が対象）
 references:                     # 任意: 参考資料
   - title: 参考資料のタイトル
