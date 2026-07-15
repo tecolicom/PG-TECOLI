@@ -78,6 +78,13 @@ stops:                          # ツアーの各地点（順番に表示）
 - 任意キー: `subtitle`・`og_image`・`references`、`stops[].routes`
 - `body` で使えるのは **太字**・[リンク](url)・段落のみ（HTML は書けません）
 
+## 編集部への参加
+
+「週刊鉄塔マガジン」（路線ツアー・見どころ）は公開編集部で作っています。
+記事ネタを思いついたら [Issue テンプレート](.github/ISSUE_TEMPLATE/article-proposal.md) から起案してください。
+校正中の記事へのコメントも歓迎です（該当 Issue にどうぞ）。
+編集の流れ（ラベル・Milestone・プレビューの見かた）は [docs/editorial.md](docs/editorial.md) に詳しくまとめています。
+
 ## 投稿のしかた
 
 1. このリポジトリを **fork & clone** して `spots/NNN-<あなたのID>.yaml` を追加
