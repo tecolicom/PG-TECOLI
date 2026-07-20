@@ -52,6 +52,13 @@ stops:
       解消した耐氷雪形です。3本の電線がどれだけ跳ねても相間の距離は保たれ、
       鉄塔の背が低いぶん、稜線で受ける風や着氷の荷重も抑えられると考えられます。
 
+      雪が送電を襲うのは、机上の話ではありません。着氷雪は電線の張力を通常の数倍にも
+      引き上げ、短絡どころか**鉄塔そのものを倒す**ことがあります。1986年3月の関東の大雪では、
+      強風と着雪で**神奈川県内の送電鉄塔6基が倒壊**し、最長50時間を超える停電が約300万人に
+      影響しました。1998年のカナダ・ケベックを襲った氷嵐では、**鉄塔約130基**と3万本超の
+      電柱が倒れ、400万人以上が真冬に電気を失っています。基幹送電線の耐氷雪設計は、
+      こうした教訓の上にあります。
+
       代償は土地です。1基に1回線しか載らないため、2回線を送るには**ルートごと2本**
       建てるしかなく、鉄塔の基数も用地もほぼ2倍。土地の限られた日本で標準になれなかったのは
       このためです。それでも「豪雪の峠で基幹系統を止めない」という一点でこの費用のかかる
@@ -97,6 +104,8 @@ references:
   - {title: 特殊な・めずらしい形の送電線（タワーライン・ソリューション）, url: "https://www.k-tls.co.jp/overhead-tml/specialline.html"}
   - {title: 架空送電線路の着氷雪による事故と対策（電旅）, url: "https://dentabi.com/accidents-and-countermeasures-due-to-icing-snow-on-overhead-power-lines/"}
   - {title: ネコ鉄塔？ 鉄塔カードの名所がミニチュアに（Lmaga.jp）, url: "https://www.lmaga.jp/news/2021/12/371466/"}
+  - {title: 大雪の災害記録（Yahoo!天気・災害 災害カレンダー）, url: "https://typhoon.yahoo.co.jp/weather/calendar/list/?disasterCd=8"}
+  - {title: "Looking back on the 1998 ice storm (CBC News)", url: "https://www.cbc.ca/news/canada/montreal/ice-storm-1998-1.4469977"}
   - {title: 新信濃変電所 — Wikipedia, url: "https://ja.wikipedia.org/wiki/新信濃変電所"}
   - {title: 京浜電力 — Wikipedia, url: "https://ja.wikipedia.org/wiki/京浜電力"}
   - {title: 東京電力リニューアブルパワー 水力発電所一覧, url: "https://www.tepco.co.jp/rp/business/hydroelectric_power/domestic/list.html"}
